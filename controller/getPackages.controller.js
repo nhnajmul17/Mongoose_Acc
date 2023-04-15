@@ -25,11 +25,19 @@ exports.getPackages = async (req, res) => {
             queries.sortBy = sortBy
         }
 
-        //Getting Actual Data
 
-        const data = await Package.find(filters)
+        //get some specific Fields data
+        if (req.query.fields) {
+            const fields = req.query.fields.split(",").join(" ")
+            queries.fields = fields
+        }
+
+
+        //Getting Actual Data
+        const data = await Package.find({})
             .skip(queries.skip)
             .limit(queries.limit)
+            .select(queries.fields)
             .sort(queries.sortBy)
 
         const totalPackage = await Package.countDocuments()
