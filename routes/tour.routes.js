@@ -1,5 +1,5 @@
 const express = require("express")
-const { getPackages, specificPackage, addPackage } = require("../controller/getPackages.controller")
+const { getPackages, specificPackage, addPackage, updatePackage, getTrendingPackages, getCheapestPackages } = require("../controller/getPackages.controller")
 const tourRouter = express.Router()
 
 tourRouter.route("/")
@@ -7,7 +7,9 @@ tourRouter.route("/")
     .post(addPackage)
 
 
-tourRouter.route("/:id").get(specificPackage)
+tourRouter.route("/trending").get(getTrendingPackages)
+tourRouter.route("/cheapest").get(getCheapestPackages)
+tourRouter.route("/:id").get(specificPackage).patch(updatePackage)
 
 
 

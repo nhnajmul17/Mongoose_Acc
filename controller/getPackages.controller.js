@@ -98,3 +98,63 @@ exports.specificPackage = async (req, res) => {
         })
     }
 }
+
+
+exports.updatePackage = async (req, res) => {
+    try {
+        const { id } = req.params
+        const result = await Package.updateOne({ _id: id }, { $set: (req.body) }, { runValidators: true })
+        res.status(200).json({
+            success: "Success",
+            message: "Package Updated ",
+            data: result
+
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            success: "Failed",
+            message: error.message
+        })
+    }
+}
+
+
+exports.getTrendingPackages = async (req, res) => {
+    try {
+        const data = await Package.find({}).sort({ views: -1 }).limit(3)
+        res.status(200).json({
+            success: "Success",
+            message: "Trendings Data",
+            data: data
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: "Failed",
+            message: error.message
+        })
+
+    }
+
+}
+
+
+exports.getCheapestPackages = async (req, res) => {
+    try {
+        const data = await Package.find({}).sort({ packagePrice: 1 }).limit(3)
+        res.status(200).json({
+            success: "Success",
+            message: "Cheapest Packages",
+            data: data
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: "Failed",
+            message: error.message
+        })
+
+    }
+
+}
