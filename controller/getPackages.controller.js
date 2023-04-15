@@ -80,7 +80,21 @@ exports.addPackage = async (req, res) => {
 }
 
 
-exports.specificPackage = (req, res) => {
-    const { id } = req.params
-    res.send(`specific ${id}`)
+exports.specificPackage = async (req, res) => {
+    try {
+        const { id } = req.params
+        const package = await Package.findOneAndUpdate({ _id: id }, { $inc: { views: 1 } }, { new: true })
+
+        res.status(200).json({
+            success: "Success",
+            message: "Package Found",
+            data: package
+
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: "Failed",
+            message: error.message
+        })
+    }
 }
