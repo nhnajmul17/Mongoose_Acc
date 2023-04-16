@@ -24,6 +24,8 @@ const packageSchema = mongoose.Schema({
     timestamps: true
 })
 
+//Mongoose Middleware
+
 // packageSchema.post("findOne", function (doc, next) {
 
 //     if (!doc.count) {
